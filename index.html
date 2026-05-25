@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07000d">
+    <title>CrushTunes</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <section class="login-screen" id="loginScreen" aria-label="Login">
+      <form class="login-card" id="loginForm">
+        <p class="eyebrow">Local account</p>
+        <h1>CrushTunes</h1>
+        <p class="login-copy">Sign in to keep your remembered music folders separate on this device.</p>
+        <label>
+          Username
+          <input id="loginUser" type="text" autocomplete="username" required>
+        </label>
+        <label>
+          Password
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="primary-action" type="submit">Enter library</button>
+        <p class="login-note">This static login stores only a local browser session. Your music stays on your device.</p>
+      </form>
+    </section>
+
+    <main class="app-shell app-locked" id="appShell">
+      <section class="library-pane" aria-label="Music library">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Good listening</p>
+            <h1>CrushTunes</h1>
+            <p id="userBadge">Signed out</p>
+          </div>
+          <div class="top-actions">
+            <button class="icon-button" id="refreshButton" type="button" title="Rescan saved folders" aria-label="Rescan saved folders">
+              <span data-icon="refresh"></span>
+            </button>
+            <button class="icon-button" id="logoutButton" type="button" title="Log out" aria-label="Log out">
+              <span data-icon="logout"></span>
+            </button>
+          </div>
+        </header>
+
+        <div class="actions">
+          <button class="primary-action" id="pickFolderButton" type="button">
+            <span data-icon="folder"></span>
+            Add music folder
+          </button>
+          <label class="secondary-action">
+            <span data-icon="upload"></span>
+            Import folder files
+            <input id="folderInput" type="file" webkitdirectory directory multiple>
+          </label>
+        </div>
+
+        <label class="search-box">
+          <span data-icon="search"></span>
+          <input id="searchInput" type="search" placeholder="Search songs, artists, folders">
+        </label>
+
+        <div class="category-strip" aria-label="Library categories">
+          <span class="category-chip active">All</span>
+          <span class="category-chip">Playlists</span>
+          <span class="category-chip">Uploaded</span>
+          <span class="category-chip">Liked</span>
+        </div>
+
+        <div class="library-meta" id="libraryMeta">Add one folder now, then add more whenever you want. Saved folders can be rescanned without reuploading.</div>
+
+        <nav class="folder-list" id="folderList" aria-label="Playlists"></nav>
+      </section>
+
+      <section class="content-pane" aria-label="Songs">
+        <div class="playlist-head">
+          <div>
+            <p class="eyebrow" id="folderEyebrow">Playlists</p>
+            <h2 id="playlistTitle">Songs</h2>
+          </div>
+          <button class="pill-button" id="shuffleButton" type="button" title="Shuffle" aria-label="Shuffle">
+            <span data-icon="shuffle"></span>
+            Shuffle
+          </button>
+        </div>
+
+        <div class="track-list" id="trackList" role="list"></div>
+      </section>
+
+      <aside class="player-pane is-collapsed" id="playerPane" aria-label="Now playing">
+        <div class="mini-player">
+          <button class="mini-main" id="playerToggle" type="button" aria-label="Expand now playing">
+            <span class="mini-thumb">
+              <img id="miniCoverArt" alt="">
+              <span id="miniCoverPlaceholder" data-icon="music"></span>
+            </span>
+            <span class="mini-copy">
+              <span id="miniTitle">Choose a playlist</span>
+              <span id="miniArtist">Add folders to start listening.</span>
+            </span>
+          </button>
+          <div class="mini-controls" aria-label="Mini player controls">
+            <button class="icon-button mini-control" id="miniShuffleButton" type="button" title="Shuffle" aria-label="Shuffle">
+              <span data-icon="shuffle"></span>
+            </button>
+            <button class="icon-button mini-control" id="miniPreviousButton" type="button" title="Previous song" aria-label="Previous song">
+              <span data-icon="previous"></span>
+            </button>
+            <button class="icon-button mini-control mini-play" id="miniPlayButton" type="button" title="Play" aria-label="Play">
+              <span data-icon="play"></span>
+            </button>
+            <button class="icon-button mini-control" id="miniNextButton" type="button" title="Next song" aria-label="Next song">
+              <span data-icon="next"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="full-player">
+          <div class="phone-player">
+            <button class="collapse-button" id="playerCollapseButton" type="button" aria-label="Minimize now playing">
+              <span data-icon="chevron-down"></span>
+            </button>
+
+            <button class="heart-button" id="nowLikeButton" type="button" aria-label="Like current song" title="Like current song">
+              <span data-icon="heart"></span>
+            </button>
+
+            <div class="cover-wrap">
+              <img id="coverArt" alt="" class="cover-art">
+              <div class="cover-placeholder" id="coverPlaceholder">
+                <span data-icon="music"></span>
+              </div>
+            </div>
+
+            <div class="wheel-tracks" aria-hidden="true">
+              <span class="wheel-track wheel-track-prev">
+                <span id="wheelPrevTime">15</span>
+                <strong id="wheelPrevTitle">Previous</strong>
+                <small id="wheelPrevArtist">Track</small>
+              </span>
+              <span class="wheel-track wheel-track-current">
+                <span id="wheelCurrentTime">01</span>
+                <strong id="wheelCurrentTitle">Ready</strong>
+                <small id="wheelCurrentArtist">CrushTunes</small>
+              </span>
+              <span class="wheel-track wheel-track-next">
+                <span id="wheelNextTime">02</span>
+                <strong id="wheelNextTitle">Next</strong>
+                <small id="wheelNextArtist">Track</small>
+              </span>
+            </div>
+
+            <div class="wheel-panel">
+              <svg class="progress-arc" viewBox="0 0 360 150" aria-hidden="true">
+                <path class="progress-arc-track" d="M24 118 A158 158 0 0 1 336 118"></path>
+                <path class="progress-arc-fill" id="progressArcBar" d="M24 118 A158 158 0 0 1 336 118"></path>
+              </svg>
+
+              <div class="now-playing">
+                <p class="arc-time"><span id="currentTime">0:00</span> / <span id="durationTime">0:00</span></p>
+                <p class="eyebrow" id="nowAlbum">Ready</p>
+                <h2 id="nowTitle">Choose a playlist</h2>
+                <p id="nowArtist">Your songs will appear here.</p>
+              </div>
+
+              <div class="progress-group">
+                <input id="progressSlider" class="progress-slider" type="range" min="0" max="1000" value="0" aria-label="Song progress">
+              </div>
+
+              <div class="transport-zone">
+                <button class="icon-button wheel-side wheel-shuffle" id="fullShuffleButton" type="button" title="Shuffle" aria-label="Shuffle">
+                  <span data-icon="shuffle"></span>
+                </button>
+                <button class="icon-button wheel-side wheel-repeat" id="repeatButton" type="button" title="Repeat track" aria-label="Repeat track">
+                  <span data-icon="repeat"></span>
+                </button>
+                <div class="transport">
+                  <button class="icon-button" id="previousButton" type="button" title="Previous song" aria-label="Previous song">
+                    <span data-icon="previous"></span>
+                  </button>
+                  <button class="play-button" id="playButton" type="button" title="Play" aria-label="Play">
+                    <span data-icon="play"></span>
+                  </button>
+                  <button class="icon-button" id="nextButton" type="button" title="Next song" aria-label="Next song">
+                    <span data-icon="next"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <audio id="audio" preload="auto"></audio>
+        <audio id="preloadAudio" preload="auto" aria-hidden="true"></audio>
+      </aside>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

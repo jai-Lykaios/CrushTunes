@@ -1,0 +1,9 @@
+{
+  "name": "CrushTunes",
+  "short_name": "CrushTunes",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#101315",
+  "theme_color": "#101315",
+  "icons": []
+}
